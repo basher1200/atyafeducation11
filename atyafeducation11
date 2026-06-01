@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>منصة أطياف التعليمية - نظام تسجيل الطلاب المتقدم</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+min-height: 100vh;
+padding: 20px;
+transition: all 0.3s ease;
+}
+.container { max-width: 800px; margin: 0 auto; }
+.page {
+background: white;
+border-radius: 20px;
+padding: 30px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+margin-bottom: 20px;
+transition: transform 0.2s;
+}
+.page:hover { transform: translateY(-2px); }
+.header { text-align: center; margin-bottom: 30px; }
+.cover {
+width: 100%;
+height: 150px;
+background: linear-gradient(135deg, #667eea, #764ba2);
+border-radius: 15px;
+margin-bottom: 20px;
+position: relative;
+overflow: hidden;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-size: 14px;
+background-size: cover;
+background-position: center;
+transition: all 0.3s;
+}
+.cover:hover { transform: scale(1.01); }
+.cover span { background: rgba(0,0,0,0.6); padding: 8px 15px; border-radius: 25px; backdrop-filter: blur(5px); }
+.profile-img {
+width: 100px;
+height: 100px;
+border-radius: 50%;
+border: 4px solid white;
+background: #e0e0e0;
+margin: -50px auto 0;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 40px;
+cursor: pointer;
+overflow: hidden;
+background-color: white;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+position: relative;
+z-index: 2;
+transition: all 0.3s;
+}
+.profile-img:hover { transform: scale(1.05); }
+.profile-img img { width: 100%; height: 100%; object-fit: cover; }
+.platform-name input {
+text-align: center;
+font-size: 24px;
+font-weight: bold;
+border: none;
+border-bottom: 2px solid #667eea;
+padding: 10px;
+width: 100%;
+transition: all 0.3s;
+}
+.platform-name input:focus { border-bottom-color: #764ba2; outline: none; }
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+input, textarea, select {
+width: 100%;
+padding: 12px;
+border: 2px solid #e0e0e0;
+border-radius: 10px;
+font-size: 16px;
+transition: all 0.3s;
+}
+input:focus, textarea:focus, select:focus { border-color: #667eea; outline: none; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
+.phone-group { display: flex; gap: 10px; }
+.phone-group select { width: 120px; flex-shrink: 0; }
+.phone-group input { flex: 1; }
+button {
+width: 100%;
+padding: 14px;
+background: linear-gradient(135deg, #667eea, #764ba2);
+color: white;
+border: none;
+border-radius: 10px;
+font-size: 18px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 10px;
+transition: all 0.2s;
+}
+button:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+button:active { transform: translateY(0); }
+.btn-back { background: #95a5a6; }
+.btn-excel { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+.btn-home { background: #555; margin-top: 5px; }
+.btn-danger { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+.btn-warning { background: linear-gradient(135deg, #f39c12, #e67e22); }
+.whatsapp-btn { background: #25d366; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-top: 5px; transition: all 0.2s; }
+.whatsapp-btn:hover { transform: scale(1.05); background: #128C7E; }
+.error { background: #fee; color: #c33; padding: 12px; border-radius: 10px; margin-top: 15px; text-align: center; border-right: 4px solid #c33; }
+.success-msg { background: #d4edda; color: #155724; padding: 12px; border-radius: 10px; margin-top: 10px; border-right: 4px solid #28a745; }
+.hidden { display: none; }
+.file-preview { margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 10px; text-align: center; }
+.file-preview img { max-width: 100%; max-height: 150px; border-radius: 10px; }
+.info-card {
+background: linear-gradient(135deg, #f0f4ff, #e8edf5);
+border-radius: 15px;
+padding: 20px;
+margin-top: 25px;
+border-right: 5px solid #667eea;
+}
+.info-card h4 { color: #667eea; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 8px; }
+.info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #ccc; }
+.info-label { font-weight: bold; color: #555; }
+.info-value { color: #333; font-weight: 500; }
+.row-2cols { display: flex; gap: 15px; }
+.row-2cols .form-group { flex: 1; }
+.stage-readonly { background: #f0f0f0; cursor: not-allowed; }
+.success-page { text-align: center; background: white; border-radius: 20px; padding: 60px 30px; }
+.success-title { font-size: 32px; font-weight: bold; color: #667eea; margin-bottom: 20px; }
+.success-message { font-size: 24px; font-weight: bold; color: #27ae60; margin: 30px 0; }
+.success-subtitle { font-size: 28px; font-weight: bold; color: #667eea; margin-top: 20px; }
+.admin-panel {
+background: white;
+border-radius: 20px;
+padding: 20px;
+margin-top: 20px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.admin-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 10px;
+margin-bottom: 20px;
+}
+.admin-header h3 { color: #667eea; font-size: 24px; }
+.admin-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+.admin-buttons button { width: auto; padding: 10px 20px; margin: 0; }
+.student-table { width: 100%; border-collapse: collapse; overflow-x: auto; display: block; }
+.student-table th, .student-table td { border: 1px solid #ddd; padding: 10px; text-align: right; }
+.student-table th { background: #667eea; color: white; font-weight: bold; position: sticky; top: 0; }
+.student-table tr:nth-child(even) { background: #f9f9f9; }
+.student-table tr:hover { background: #f0f4ff; }
+.delete-btn { background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: all 0.2s; }
+.edit-btn { background: #f39c12; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-left: 5px; transition: all 0.2s; }
+.delete-btn:hover, .edit-btn:hover { transform: scale(1.05); }
+.stats { background: linear-gradient(135deg, #667eea22, #764ba222); padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center; font-weight: bold; }
+.login-options { display: flex; gap: 10px; margin-bottom: 20px; }
+.login-options button { flex: 1; margin-top: 0; }
+.forgot-password { text-align: left; margin-top: 10px; }
+.forgot-password a { color: #667eea; cursor: pointer; text-decoration: underline; }
+.pro-admin-btn { background: linear-gradient(135deg, #2c3e50, #1a1a2e); color: gold; border: 1px solid gold; margin-top: 15px; }
+.admin-search { margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
+.admin-search input { flex: 1; padding: 10px; }
+.admin-search select { width: auto; min-width: 100px; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
+.stat-card {
+background: linear-gradient(135deg, #667eea22, #764ba222);
+padding: 15px;
+border-radius: 15px;
+text-align: center;
+border: 1px solid #667eea44;
+transition: all 0.3s;
+cursor: pointer;
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.stat-card h4 { font-size: 14px; color: #555; margin-bottom: 8px; }
+.stat-card .number { font-size: 28px; font-weight: bold; color: #667eea; }
+.profile-thumb { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.old-file-section { background: #f0f4ff; padding: 15px; border-radius: 15px; margin-bottom: 20px; border-right: 4px solid #667eea; }
+.download-link {
+display: inline-block;
+background: #27ae60;
+color: white;
+padding: 8px 15px;
+border-radius: 25px;
+text-decoration: none;
+margin-top: 10px;
+font-size: 14px;
+transition: all 0.2s;
+}
+.download-link:hover { transform: translateY(-2px); }
+.appearance-section { background: #f8f9fa; border-radius: 15px; padding: 15px; margin: 20px 0; border: 1px solid #ddd; }
+.appearance-section h4 { color: #667eea; margin-bottom: 15px; }
+.appearance-controls { display: flex; flex-wrap: wrap; gap: 15px; }
+.appearance-control { flex: 1; min-width: 200px; }
+.appearance-control label { display: block; margin-bottom: 5px; font-weight: bold; }
+.appearance-control input[type="color"] { width: 100%; height: 40px; border-radius: 10px; border: 1px solid #ddd; cursor: pointer; }
+.appearance-control input[type="file"] { width: 100%; padding: 8px; }
+.small-btn { margin-top: 5px; background: #95a5a6; color: white; padding: 5px 10px; font-size: 12px; width: auto; }
+.fields-list-container { background: white; border-radius: 10px; padding: 10px; max-height: 400px; overflow-y: auto; }
+.field-item {
+background: #f8f9fa;
+padding: 10px;
+margin: 8px 0;
+border-radius: 10px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 10px;
+}
+.field-actions button { margin: 0 3px; padding: 5px 10px; font-size: 12px; width: auto; }
+.sheets-notification {
+background: #fff3cd;
+border: 1px solid #ffeeba;
+color: #856404;
+padding: 15px;
+border-radius: 10px;
+margin: 15px 0;
+text-align: right;
+direction: rtl;
+}
+.sheets-notification pre {
+background: #f8f9fa;
+padding: 10px;
+border-radius: 5px;
+overflow-x: auto;
+font-size: 12px;
+margin-top: 10px;
+}
+.copy-btn {
+background: #007bff;
+color: white;
+border: none;
+padding: 5px 10px;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 10px;
+width: auto;
+}
+.backup-section {
+background: #e8f5e9;
+border: 1px solid #a5d6a7;
+border-radius: 15px;
+padding: 15px;
+margin: 15px 0;
+}
+.backup-section h5 { color: #2e7d32; margin-bottom: 10px; }
+.backup-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+.backup-buttons button { width: auto; padding: 8px 15px; font-size: 14px; margin: 0; }
+
+/* responsive */
+@media (max-width: 768px) {
+    body { padding: 10px; }
+    .page { padding: 20px; }
+    .row-2cols { flex-direction: column; gap: 0; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .admin-buttons { flex-direction: column; }
+    .admin-buttons button { width: 100%; }
+    .admin-header { flex-direction: column; }
+    .student-table th, .student-table td { padding: 6px; font-size: 12px; }
+    .profile-img { width: 70px; height: 70px; margin-top: -35px; }
+    .cover { height: 100px; }
+    .phone-group select { width: 90px; }
+}
+
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .field-item { flex-direction: column; align-items: stretch; }
+    .field-actions { display: flex; justify-content: center; }
+}
+
+/* animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.page, .admin-panel { animation: fadeIn 0.4s ease; }
+</style>
+</head>
+<body>
+<div class="container">
+<div id="choicePage" class="page">
+<div class="header">
+<div class="cover" id="coverAreaDisplay"><span>🏫 منصة أطياف التعليمية</span></div>
+<div class="profile-img" id="profileDisplay">📷</div>
+<div class="platform-name"><div style="font-size:24px; font-weight:bold; color:#667eea;">منصة أطياف التعليمية</div></div>
+</div>
+<div class="login-options">
+<button onclick="showLoginPage()">🔐 تسجيل الدخول</button>
+<button onclick="showRegisterPage()">📝 تسجيل جديد</button>
+</div>
+<div style="text-align: center; margin-top: 15px;">
+<button onclick="showAdminLogin()" style="background: #555; width: auto; padding: 8px 20px; font-size: 12px;">🔐 دخول المسؤول</button>
+<button onclick="showProAdminPanel()" class="pro-admin-btn" style="width: auto; padding: 8px 20px; font-size: 12px;">⚙️ لوحة المسؤول المتقدمة</button>
+</div>
+</div>
+
+<div id="loginPage" class="page hidden">
+<h2 style="margin-bottom:20px; color:#667eea; text-align:center;">🔐 تسجيل الدخول</h2>
+<div class="form-group"><label>الرقم الجامعي *</label><input type="text" id="loginUniversityId" placeholder="أدخل الرقم الجامعي"></div>
+<div class="form-group"><label>كلمة السر *</label><input type="password" id="loginPassword" placeholder="أدخل كلمة المرور"></div>
+<div class="forgot-password"><a onclick="showForgotPassword()">نسيت كلمة السر؟</a></div>
+<button onclick="doLogin()">دخول ✅</button>
+<button onclick="backToHome()" class="btn-home">🏠 رجوع للرئيسية</button>
+<div id="loginError" class="error hidden"></div>
+</div>
+
+<div id="forgotPage" class="page hidden">
+<h2 style="margin-bottom:20px; color:#667eea; text-align:center;">🔑 استعادة كلمة السر</h2>
+<div class="form-group"><label>الرقم الجامعي *</label><input type="text" id="forgotUniId" placeholder="أدخل الرقم الجامعي"></div>
+<div class="form-group"><label>رقم الجوال *</label><input type="tel" id="forgotPhone" placeholder="أدخل رقم الجوال"></div>
+<button onclick="sendNewPassword()" style="background:linear-gradient(135deg,#25d366,#128C7E);">📱 إرسال كلمة سر جديدة للواتساب</button>
+<button onclick="backToHome()" class="btn-home">🏠 رجوع للرئيسية</button>
+<div id="forgotError" class="error hidden"></div>
+<div id="forgotSuccess" class="success-msg hidden"></div>
+</div>
+
+<div id="page1" class="page hidden">
+<div class="header">
+<div class="cover" id="coverArea" onclick="document.getElementById('coverFileInput').click()"><span>🖼️ اضغط لتغيير صورة الغلاف</span></div>
+<input type="file" id="coverFileInput" accept="image/*" style="display:none">
+<div class="profile-img" id="profileClick">📷</div>
+<input type="file" id="profileFileInput" accept="image/*" style="display:none">
+<div class="platform-name"><input type="text" id="platformName" placeholder="اسم المنصة التعليمية" value="منصة أطياف التعليمية"></div>
+</div>
+
+<div id="customFieldsContainer"></div>
+
+<div class="form-group"><label>الرقم الجامعي *</label><input type="text" id="universityId" placeholder="مثال: S250054965" onkeyup="updateInfoCard()"></div>
+<div class="form-group"><label>كلمة السر *</label><input type="password" id="password" placeholder="أدخل كلمة المرور" onkeyup="updateInfoCard()"></div>
+
+<div class="form-group">
+<label>رقم الجوال *</label>
+<div class="phone-group">
+<select id="countryCode" onchange="updateInfoCard()">
+<option value="+966" selected>🇸🇦 +966</option><option value="+967">🇾🇪 +967</option>
+<option value="+971">🇦🇪 +971</option><option value="+20">🇪🇬 +20</option>
+<option value="+962">🇯🇴 +962</option><option value="+964">🇮🇶 +964</option>
+<option value="+965">🇰🇼 +965</option><option value="+968">🇴🇲 +968</option>
+<option value="+974">🇶🇦 +974</option><option value="+213">🇩🇿 +213</option>
+<option value="+212">🇲🇦 +212</option><option value="+216">🇹🇳 +216</option>
+</select>
+<input type="tel" id="phone" placeholder="رقم الجوال" onkeyup="updateInfoCard()">
+</div>
+</div>
+
+<div class="form-group">
+<label>عدد المواد المسجلة *</label>
+<select id="coursesCount" onchange="updateInfoCard()">
+<option value="1">1 مادة</option><option value="2">2 مواد</option><option value="3">3 مواد</option>
+<option value="4">4 مواد</option><option value="5">5 مواد</option><option value="6">6 مواد</option><option value="7">7 مواد</option>
+</select>
+</div>
+
+<div id="infoCard" class="info-card hidden">
+<h4>📋 معلومات التسجيل</h4>
+<div class="info-row"><span class="info-label">الاسم الكامل:</span><span class="info-value" id="displayName">-</span></div>
+<div class="info-row"><span class="info-label">التخصص & عدد المواد:</span><span class="info-value" id="displayMajorCourses">-</span></div>
+<div class="info-row"><span class="info-label">الرقم الجامعي:</span><span class="info-value" id="displayUniId">-</span></div>
+<div class="info-row"><span class="info-label">كلمة السر:</span><span class="info-value" id="displayPassword">-</span></div>
+<div class="info-row"><span class="info-label">رقم الجوال:</span><span class="info-value" id="displayPhone">-</span></div>
+</div>
+
+<button onclick="goToPage2()">التالي 📌</button>
+<button onclick="backToHome()" class="btn-home">🏠 رجوع للرئيسية</button>
+<div id="error1" class="error hidden"></div>
+</div>
+
+<div id="page2" class="page hidden">
+<h2 style="margin-bottom:20px; color:#667eea;">📎 رفع المرفقات</h2>
+<div class="form-group"><label>رفع ملف أو صورة *</label><input type="file" id="uploadFile" accept=".pdf,.jpg,.jpeg,.png,.gif"><div id="filePreviewArea" class="file-preview hidden"></div></div>
+<div class="form-group"><label>ملاحظة أو تعليق</label><textarea id="comment" rows="4" placeholder="اكتب أي ملاحظات إضافية..."></textarea></div>
+<button onclick="submitFinalData()">تسليم ✅</button>
+<button onclick="backToPage1()" class="btn-back">🔙 رجوع للتسجيل</button>
+<button onclick="backToHome()" class="btn-home">🏠 رجوع للرئيسية</button>
+<div id="error2" class="error hidden"></div>
+</div>
+
+<div id="editPage" class="page hidden">
+<h2 style="margin-bottom:20px; color:#667eea; text-align:center;">✏️ تعديل الملف المرفق</h2>
+<div id="oldFileSection" class="old-file-section hidden">
+<h4>📄 ملفك الحالي</h4>
+<div id="oldFilePreview"></div>
+<a id="downloadOldFileBtn" class="download-link" target="_blank">⬇️ تحميل الملف القديم</a>
+</div>
+<div class="form-group"><label>رفع ملف جديد أو صورة</label><input type="file" id="editUploadFile" accept=".pdf,.jpg,.jpeg,.png,.gif"><div id="editPreviewArea" class="file-preview hidden"></div></div>
+<button onclick="updateFile()">تحديث الملف ✅</button>
+<button onclick="logout()" class="btn-back">🚪 تسجيل خروج</button>
+<button onclick="backToHome()" class="btn-home">🏠 رجوع للرئيسية</button>
+<div id="editError" class="error hidden"></div>
+<div id="editSuccess" class="success-msg hidden"></div>
+</div>
+
+<div id="successPage" class="success-page hidden">
+<div class="success-title">شكرا لكم</div>
+<div class="success-message">تم التسجيل بنجاح</div>
+<div class="success-subtitle">نحو المستقبل مع منصة أطياف التعليمية</div>
+<button class="success-btn" onclick="resetAndGoHome()">تسجيل طالب جديد ➕</button>
+<button onclick="backToHome()" class="btn-home" style="background:#555; margin-top:15px;">🏠 رجوع للرئيسية</button>
+</div>
+
+<div id="adminPanel" class="admin-panel hidden">
+<div class="admin-header">
+<h3>👨‍💼 لوحة تحكم المسؤول</h3>
+<div class="admin-buttons">
+<button class="btn-excel" onclick="exportToExcel()">📊 تصدير Excel</button>
+<button onclick="hideAdminPanel()" style="background:#95a5a6;">🔒 إخفاء</button>
+</div>
+</div>
+<div class="stats" id="statsArea">📈 عدد الطلاب المسجلين: 0</div>
+<div id="adminData" style="overflow-x: auto;"></div>
+</div>
+
+<div id="proAdminPanel" class="admin-panel hidden">
+<div class="admin-header">
+<h3>⭐ لوحة المسؤول المتقدمة ⭐</h3>
+<div class="admin-buttons">
+<button class="btn-excel" onclick="exportToExcelPro()">📊 تصدير Excel</button>
+<button onclick="showUnsyncedFiles()" style="background: #f39c12;">☁️ رفع الملفات المحلية</button>
+<button onclick="showDetailedStatsModal()" style="background: #9b59b6;">📈 إحصائيات متقدمة</button>
+<button onclick="hideProAdminPanel()" style="background:#95a5a6;">🔒 إخفاء</button>
+</div>
+</div>
+
+<div class="backup-section">
+<h5>💾 النسخ الاحتياطي</h5>
+<div class="backup-buttons">
+<button onclick="backupData()" style="background:#2ecc71;">📥 عمل نسخة احتياطية</button>
+<button onclick="document.getElementById('restoreFileInput').click()" style="background:#e67e22;">📤 استعادة نسخة</button>
+<input type="file" id="restoreFileInput" accept=".json" style="display:none" onchange="restoreBackup(this.files[0])">
+<button onclick="deleteAllStudents()" class="btn-danger" style="background:#e74c3c;">⚠️ حذف جميع الطلاب</button>
+</div>
+</div>
+
+<div class="stats-grid">
+<div class="stat-card" onclick="filterByGender('all')"><h4>👨‍🎓 إجمالي الطلاب</h4><div class="number" id="proTotalStudents">0</div></div>
+<div class="stat-card" onclick="filterByGender('male')"><h4>👤 ذكور</h4><div class="number" id="proMaleCount">0</div></div>
+<div class="stat-card" onclick="filterByGender('female')"><h4>👩 إناث</h4><div class="number" id="proFemaleCount">0</div></div>
+<div class="stat-card" onclick="filterByFile()"><h4>📎 ملفات مرفوعة</h4><div class="number" id="proFilesCount">0</div></div>
+</div>
+
+<div class="appearance-section">
+<h4>🎨 تخصيص مظهر الموقع</h4>
+<div class="appearance-controls">
+<div class="appearance-control">
+<label>🎨 لون الخلفية</label>
+<input type="color" id="bgColorPicker" value="#667eea">
+</div>
+<div class="appearance-control">
+<label>🖼️ صورة الخلفية</label>
+<input type="file" id="bgImageInput" accept="image/*">
+<button id="removeBgImageBtn" class="small-btn">🗑️ إزالة</button>
+</div>
+<div class="appearance-control">
+<label>👤 الصورة الشخصية</label>
+<input type="file" id="siteProfileImageInput" accept="image/*">
+<button id="removeProfileImageBtn" class="small-btn">🗑️ إزالة</button>
+</div>
+</div>
+<div style="margin-top: 15px; text-align: center;">
+<button id="saveAppearanceBtn" style="background: #27ae60; width: auto; padding: 8px 25px;">💾 حفظ التغييرات</button>
+</div>
+</div>
+
+<div class="appearance-section">
+<h4>⚙️ تخصيص نموذج التسجيل</h4>
+<div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+<button id="addNewFieldBtn" style="background: #27ae60; width: auto; padding: 8px 20px;">➕ إضافة حقل جديد</button>
+<button id="resetFormBtn" style="background: #e74c3c; width: auto; padding: 8px 20px;">🔄 إعادة تعيين</button>
+</div>
+<div id="fieldsList" class="fields-list-container"></div>
+<button id="saveFormFieldsBtn" style="background: #3498db; width: auto; padding: 8px 20px; margin-top: 15px;">💾 حفظ الترتيب</button>
+</div>
+
+<div class="admin-search">
+<input type="text" id="proSearchInput" placeholder="🔍 بحث بالاسم أو الرقم الجامعي...">
+<select id="proFilterGender" style="width: auto; padding: 8px;">
+<option value="all">الكل</option><option value="male">ذكور</option><option value="female">إناث</option>
+</select>
+<select id="proFilterMajor" style="width: auto; padding: 8px;">
+<option value="all">جميع التخصصات</option>
+</select>
+</div>
+<div style="overflow-x: auto;">
+<table class="student-table">
+<thead><tr><th>الصورة</th><th>الاسم</th><th>الرقم الجامعي</th><th>كلمة السر</th><th>الجوال</th><th>التخصص</th><th>المواد</th><th>الجنس</th><th>الملف</th><th>إجراءات</th></tr></thead>
+<tbody id="proAdminTbody"></tbody>
+\dTable
+</div>
+</div>
+</div>
+
+<div id="addFieldModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10001; align-items: center; justify-content: center;">
+<div style="background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 400px;">
+<h3 style="color: #667eea; margin-bottom: 15px;">➕ إضافة حقل جديد</h3>
+<div class="form-group"><label>نوع الحقل</label>
+<select id="newFieldType">
+<option value="text">📝 نص</option><option value="number">🔢 رقم</option>
+<option value="email">📧 بريد إلكتروني</option><option value="tel">📞 جوال</option>
+<option value="select">📋 قائمة منسدلة</option><option value="textarea">📄 نص طويل</option>
+<option value="date">📅 تاريخ</option>
+</select>
+</div>
+<div class="form-group"><label>اسم الحقل</label><input type="text" id="newFieldLabel" placeholder="مثال: تاريخ الميلاد"></div>
+<div class="form-group"><label>المعرف (ID)</label><input type="text" id="newFieldId" placeholder="مثال: birthDate"></div>
+<div class="form-group"><label>خيارات القائمة</label><textarea id="newFieldOptions" rows="2" placeholder="خيار1,خيار2,خيار3"></textarea></div>
+<div style="display: flex; gap: 10px;">
+<button id="confirmAddFieldBtn" style="background: #27ae60;">إضافة</button>
+<button id="closeModalBtn" style="background: #ccc;">إلغاء</button>
+</div>
+</div>
+</div>
+
+<div id="detailedStatsModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:10002; align-items:center; justify-content:center;">
+<div style="background:white; border-radius:20px; padding:25px; max-width:500px; width:90%; max-height:80%; overflow-y:auto;">
+<h3 style="color:#667eea; margin-bottom:20px;">📊 إحصائيات تفصيلية</h3>
+<div id="detailedStatsContent"></div>
+<button onclick="closeDetailedStatsModal()" style="background:#95a5a6; margin-top:20px;">إغلاق</button>
+</div>
+</div>
+
+<script>
+// ==================== الإعدادات الأساسية ====================
+const ADMIN_PHONE = "966508150762";
+const ADMIN_PASSWORD = "admin123";
+
+// ==================== إعدادات Google Drive & Sheets ====================
+// تم تحديث الرابط إلى الرابط الجديد
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLZvbZ1sCwlC3MCriFN59v2sWGY19WKoA55AN8nS70ugQfckCioOL4CWzR5Nn389Gu/exec';
+
+let profileImageBase64 = null;
+let coverImageBase64 = null;
+let tempPage1Data = null;
+let currentEditStudent = null;
+let isSubmitting = false;
+let customFields = [];
+let currentGenderFilter = 'all';
+let currentFileFilter = false;
+
+// ==================== دوال localStorage ====================
+function getAllStudents() {
+const students = [];
+for(let i = 0; i < localStorage.length; i++) {
+const key = localStorage.key(i);
+if(key && key.startsWith('student_')) {
+try {
+const student = JSON.parse(localStorage.getItem(key));
+if(student && student.universityId) students.push(student);
+} catch(e) {}
+}
+}
+return students;
+}
+
+function saveStudent(student) {
+if(!student || !student.universityId) return;
+localStorage.setItem('student_' + student.universityId, JSON.stringify(student));
+displayAllStudents();
+refreshProAdminPanel();
+}
+
+function deleteStudent(uniId) {
+if(confirm('⚠️ هل أنت متأكد من حذف هذا الطالب نهائياً؟')) {
+localStorage.removeItem('student_' + uniId);
+displayAllStudents();
+refreshProAdminPanel();
+showMessage('✅ تم حذف الطالب بنجاح', 'success');
+}
+}
+
+function deleteAllStudents() {
+if(confirm('⚠️ تحذير شديد! هذا سيحذف جميع الطلاب نهائياً!')) {
+if(confirm('تأكيد نهائي: اكتب "حذف الكل" للمتابعة')) {
+const confirmation = prompt('اكتب "حذف الكل" للتأكيد:');
+if(confirmation === 'حذف الكل') {
+const students = getAllStudents();
+students.forEach(s => localStorage.removeItem('student_' + s.universityId));
+refreshProAdminPanel();
+displayAllStudents();
+showMessage('✅ تم حذف جميع الطلاب بنجاح', 'success');
+}
+}
+}
+}
+
+function showMessage(msg, type) {
+const existingMsg = document.querySelector('.floating-message');
+if(existingMsg) existingMsg.remove();
+const div = document.createElement('div');
+div.className = `floating-message ${type === 'success' ? 'success-msg' : 'error'}`;
+div.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:10003;padding:12px 24px;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.2);';
+div.textContent = msg;
+document.body.appendChild(div);
+setTimeout(() => div.remove(), 3000);
+}
+
+function displayAllStudents() {
+const students = getAllStudents();
+const statsArea = document.getElementById('statsArea');
+if(statsArea) statsArea.innerHTML = '📈 عدد الطلاب المسجلين: ' + students.length;
+
+const adminData = document.getElementById('adminData');
+if(!adminData) return;
+
+if(students.length === 0) {
+adminData.innerHTML = '<p style="text-align:center;">لا يوجد طلاب مسجلين</p>';
+return;
+}
+
+let html = '<table class="student-table"><thead><tr><th>#</th><th>الاسم</th><th>الرقم الجامعي</th><th>كلمة السر</th><th>الجوال</th><th>التخصص</th><th>المواد</th><th>التاريخ</th><th>الملف</th><th>حذف</th></tr></thead><tbody>';
+
+students.forEach(function(s, i) {
+html += '<tr>';
+html += '<td>' + (i+1) + '</td>';
+html += '<td>' + (s.fullName || '-') + '</td>';
+html += '<td>' + (s.universityId || '-') + '</td>';
+html += '<td>' + (s.password || '-') + '</td>';
+html += '<td>' + (s.phone || '-') + '</td>';
+html += '<td>' + (s.major || '-') + '</td>';
+html += '<td>' + (s.coursesCount || '-') + '</td>';
+html += '<td>' + (s.registerDate || '-') + '</td>';
+html += '<td>' + (s.uploadedFile ? '<a href="' + s.uploadedFile + '" download style="color:#667eea;">📥 تحميل</a>' : '-') + '</td>';
+html += '<td><button class="delete-btn" onclick="deleteStudent(\'' + s.universityId + '\')">🗑️ حذف</button></td>';
+html += '</table>';
+});
+
+html += '</tbody></table>';
+adminData.innerHTML = html;
+}
+
+// ==================== النسخ الاحتياطي ====================
+function backupData() {
+const students = getAllStudents();
+const backup = {
+version: '2.0',
+date: new Date().toISOString(),
+students: students,
+settings: {
+customFields: localStorage.getItem('custom_form_fields'),
+appearance: {
+bgColor: localStorage.getItem('app_bg_color'),
+bgImage: localStorage.getItem('app_bg_image'),
+siteProfile: localStorage.getItem('app_site_profile')
+}
+}
+};
+const dataStr = JSON.stringify(backup, null, 2);
+const blob = new Blob([dataStr], {type: 'application/json'});
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = `backup_platform_${new Date().toISOString().split('T')[0]}.json`;
+a.click();
+URL.revokeObjectURL(url);
+showMessage('✅ تم إنشاء النسخة الاحتياطية', 'success');
+}
+
+function restoreBackup(file) {
+if(!file) return;
+const reader = new FileReader();
+reader.onload = function(e) {
+try {
+const backup = JSON.parse(e.target.result);
+if(backup.students && Array.isArray(backup.students)) {
+backup.students.forEach(s => saveStudent(s));
+if(backup.settings?.customFields) {
+localStorage.setItem('custom_form_fields', backup.settings.customFields);
+}
+if(backup.settings?.appearance) {
+if(backup.settings.appearance.bgColor) localStorage.setItem('app_bg_color', backup.settings.appearance.bgColor);
+if(backup.settings.appearance.bgImage) localStorage.setItem('app_bg_image', backup.settings.appearance.bgImage);
+if(backup.settings.appearance.siteProfile) localStorage.setItem('app_site_profile', backup.settings.appearance.siteProfile);
+}
+showMessage('✅ تم استعادة النسخة الاحتياطية بنجاح', 'success');
+setTimeout(() => location.reload(), 1500);
+} else {
+showMessage('❌ ملف غير صالح', 'error');
+}
+} catch(err) {
+showMessage('❌ خطأ في قراءة الملف', 'error');
+}
+};
+reader.readAsText(file);
+}
+
+// ==================== دوال Google Sheets و Drive ====================
+async function saveToGoogleSheets(student) {
+try {
+const formData = new FormData();
+formData.append('action', 'addStudent');
+formData.append('studentData', JSON.stringify(student));
+const response = await fetch(GOOGLE_SCRIPT_URL, {
+method: 'POST',
+body: formData,
+mode: 'no-cors'
+});
+console.log('تم إرسال البيانات إلى Google Sheets');
+return { success: true };
+} catch(error) {
+console.error('خطأ في حفظ البيانات:', error);
+return { success: false, error: error.message };
+}
+}
+
+async function uploadToGoogleDrive(file, studentData) {
+try {
+const fileBase64 = await new Promise((resolve, reject) => {
+const reader = new FileReader();
+reader.onload = (e) => resolve(e.target.result);
+reader.onerror = () => reject(new Error('فشل قراءة الملف'));
+reader.readAsDataURL(file);
+});
+const formData = new FormData();
+formData.append('action', 'uploadFile');
+formData.append('fileData', fileBase64);
+formData.append('fileName', file.name);
+formData.append('universityId', studentData.universityId);
+formData.append('studentName', studentData.fullName);
+await fetch(GOOGLE_SCRIPT_URL, {
+method: 'POST',
+body: formData,
+mode: 'no-cors'
+});
+return {
+success: true,
+fileName: file.name,
+fileData: fileBase64,
+localOnly: false
+};
+} catch(error) {
+console.error('خطأ في رفع الملف:', error);
+const fileBase64 = await readFileAsBase64(file);
+return {
+success: true,
+fileName: file.name,
+fileData: fileBase64,
+localOnly: true
+};
+}
+}
+
+function readFileAsBase64(file) {
+return new Promise((resolve, reject) => {
+const reader = new FileReader();
+reader.onload = (e) => resolve(e.target.result);
+reader.onerror = () => reject(new Error('فشل قراءة الملف'));
+reader.readAsDataURL(file);
+});
+}
+
+function showSheetsNotification(student) {
+const oldNotification = document.querySelector('.sheets-notification');
+if(oldNotification) oldNotification.remove();
+const notification = document.createElement('div');
+notification.className = 'sheets-notification';
+notification.innerHTML = '<strong>✅ تم ربط المنصة بـ Google Sheets و Google Drive</strong><br> <small>البيانات تحفظ تلقائياً في حساب Google الخاص بك</small> <pre>' + JSON.stringify({
+الاسم_الكامل: student.fullName,
+الرقم_الجامعي: student.universityId,
+كلمة_السر: student.password,
+رقم_الجوال: student.phone,
+التخصص: student.major,
+عدد_المواد: student.coursesCount,
+تاريخ_التسجيل: student.registerDate,
+اسم_الملف: student.fileName || ''
+}, null, 2) + '</pre><button onclick="copyToClipboard(this.previousElementSibling.innerText)" class="copy-btn">📋 نسخ البيانات</button>';
+const proPanelContent = document.querySelector('#proAdminPanel .stats-grid');
+if(proPanelContent) {
+proPanelContent.insertAdjacentElement('afterend', notification);
+}
+}
+
+function copyToClipboard(text) {
+navigator.clipboard.writeText(text).then(function() {
+showMessage('✅ تم نسخ البيانات!', 'success');
+}).catch(function() {
+alert('❌ فشل النسخ، يمكنك نسخها يدوياً');
+});
+}
+
+// ==================== إحصائيات متقدمة ====================
+function showDetailedStatsModal() {
+const students = getAllStudents();
+const majors = {};
+const coursesCount = {};
+const registrationByMonth = {};
+
+students.forEach(s => {
+majors[s.major] = (majors[s.major] || 0) + 1;
+coursesCount[s.coursesCount] = (coursesCount[s.coursesCount] || 0) + 1;
+if(s.registerDate) {
+const month = s.registerDate.split(' ')[0];
+registrationByMonth[month] = (registrationByMonth[month] || 0) + 1;
+}
+});
+
+let html = '<div style="margin-bottom:20px;">';
+html += '<h4>📚 التوزيع حسب التخصص</h4>';
+for(let m in majors) {
+html += `<p>${m}: <strong>${majors[m]}</strong> طالب</p>`;
+}
+html += '</div><div style="margin-bottom:20px;">';
+html += '<h4>📖 توزيع عدد المواد</h4>';
+for(let c in coursesCount) {
+html += `<p>${c} مواد: <strong>${coursesCount[c]}</strong> طالب</p>`;
+}
+html += '</div><div style="margin-bottom:20px;">';
+html += '<h4>📅 التسجيلات حسب التاريخ</h4>';
+for(let d in registrationByMonth) {
+html += `<p>${d}: <strong>${registrationByMonth[d]}</strong> تسجيل</p>`;
+}
+html += '</div>';
+
+const modal = document.getElementById('detailedStatsModal');
+const content = document.getElementById('detailedStatsContent');
+if(content) content.innerHTML = html;
+if(modal) modal.style.display = 'flex';
+}
+
+function closeDetailedStatsModal() {
+const modal = document.getElementById('detailedStatsModal');
+if(modal) modal.style.display = 'none';
+}
+
+function filterByGender(gender) {
+currentGenderFilter = gender;
+const genderSelect = document.getElementById('proFilterGender');
+if(genderSelect) genderSelect.value = gender;
+refreshProAdminPanel();
+}
+
+function filterByFile() {
+currentFileFilter = !currentFileFilter;
+refreshProAdminPanel();
+showMessage(currentFileFilter ? '📎 عرض الطلاب الذين لديهم ملفات فقط' : '📋 عرض جميع الطلاب', 'success');
+}
+
+// ==================== بطاقة المعلومات ====================
+function updateInfoCard() {
+const fullName = document.getElementById('fullName');
+const major = document.getElementById('major');
+const infoCard = document.getElementById('infoCard');
+
+if(fullName && major && fullName.value.trim() !== '' && major.value.trim() !== '') {
+document.getElementById('displayName').textContent = document.getElementById('fullName').value.trim() || '-';
+document.getElementById('displayMajorCourses').textContent = major.value.trim() + ' - ' + document.getElementById('coursesCount').value + ' مواد';
+document.getElementById('displayUniId').textContent = document.getElementById('universityId').value.trim() || '-';
+document.getElementById('displayPassword').textContent = document.getElementById('password').value || '-';
+document.getElementById('displayPhone').textContent = document.getElementById('countryCode').value + (document.getElementById('phone').value.trim() || '-');
+infoCard.classList.remove('hidden');
+} else {
+infoCard.classList.add('hidden');
+}
+}
+
+// ==================== واتساب - نسخة محسنة ====================
+function sendWhatsAppNotification(student) {
+    const message = [
+        '🆕 تسجيل طالب جديد',
+        '',
+        '📛 الاسم: ' + student.fullName,
+        '🎓 الرقم الجامعي: ' + student.universityId,
+        '🔑 كلمة السر: ' + student.password,
+        '📱 الجوال: ' + student.phone,
+        '📚 التخصص: ' + (student.major || '-'),
+        '📖 عدد المواد: ' + (student.coursesCount || '-'),
+        '📅 التاريخ: ' + new Date().toLocaleString('ar-EG')
+    ].join('\n');
+
+    const whatsappUrl = 'https://wa.me/' + ADMIN_PHONE + '?text=' + encodeURIComponent(message);
+    
+    const modal = document.createElement('div');
+    modal.id = 'whatsappModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;display:flex;align-items:center;justify-content:center;';
+    
+    modal.innerHTML = `
+        <div style="background:white;padding:30px;border-radius:25px;text-align:center;max-width:420px;width:90%;direction:rtl;font-family:Tahoma;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+            <div style="font-size:60px;margin-bottom:15px;">📱</div>
+            <h3 style="color:#25d366;margin-bottom:10px;">تم التسجيل بنجاح ✅</h3>
+            <p style="color:#555;margin-bottom:20px;line-height:1.8;">
+                تم حفظ بياناتك.<br>
+                يمكنك إرسالها للمسؤول عبر واتساب:
+            </p>
+            <button id="sendWhatsappBtn" style="background:#25d366;color:white;border:none;padding:12px 25px;border-radius:50px;font-size:16px;font-weight:bold;cursor:pointer;margin:5px;width:90%;">
+                📱 إرسال إلى واتساب
+            </button>
+            <button id="copyWhatsappLinkBtn" style="background:#128C7E;color:white;border:none;padding:12px 25px;border-radius:50px;font-size:16px;font-weight:bold;cursor:pointer;margin:5px;width:90%;">
+                📋 نسخ رابط الإرسال
+            </button>
+            <button id="closeWhatsappModalBtn" style="background:#95a5a6;color:white;border:none;padding:12px 25px;border-radius:50px;font-size:14px;cursor:pointer;margin-top:15px;width:90%;">
+                ✖️ إغلاق
+            </button>
+            <p style="margin-top:15px;font-size:11px;color:#999;">
+                إذا لم يعمل الزر، اضغط "نسخ الرابط" وألصقه في المتصفح
+            </p>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    document.getElementById('sendWhatsappBtn').onclick = function() {
+        window.open(whatsappUrl, '_blank');
+        setTimeout(() => {
+            if(document.getElementById('whatsappModal')) {
+                modal.remove();
+            }
+        }, 1000);
+    };
+    
+    document.getElementById('copyWhatsappLinkBtn').onclick = function() {
+        navigator.clipboard.writeText(whatsappUrl).then(() => {
+            this.textContent = '✅ تم النسخ!';
+            this.style.background = '#27ae60';
+            setTimeout(() => {
+                this.textContent = '📋 نسخ رابط الإرسال';
+                this.style.background = '#128C7E';
+            }, 2000);
+        }).catch(() => {
+            const textarea = document.createElement('textarea');
+            textarea.value = whatsappUrl;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            this.textContent = '✅ تم النسخ!';
+            setTimeout(() => {
+                this.textContent = '📋 نسخ رابط الإرسال';
+            }, 2000);
+        });
+    };
+    
+    document.getElementById('closeWhatsappModalBtn').onclick = function() {
+        modal.remove();
+    };
+}
+
+function sendWhatsAppToStudent(uniId) {
+    const student = JSON.parse(localStorage.getItem('student_' + uniId));
+    if(!student) {
+        showMessage('❌ الطالب غير موجود', 'error');
+        return;
+    }
+    
+    const message = [
+        '📋 بيانات الطالب',
+        '',
+        '📛 الاسم: ' + student.fullName,
+        '🎓 الرقم الجامعي: ' + student.universityId,
+        '🔑 كلمة السر: ' + student.password,
+        '📱 الجوال: ' + student.phone,
+        '📚 التخصص: ' + (student.major || '-'),
+        '📖 عدد المواد: ' + (student.coursesCount || '-')
+    ].join('\n');
+    
+    const whatsappUrl = 'https://wa.me/' + student.phone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent(message);
+    window.open(whatsappUrl, '_blank');
+}
+
+// ==================== التنقل بين الصفحات ====================
+function goToPage2() {
+const fullName = document.getElementById('fullName');
+const uniId = document.getElementById('universityId');
+const password = document.getElementById('password');
+const phoneNumber = document.getElementById('phone');
+const major = document.getElementById('major');
+
+if(!fullName || !uniId || !password || !phoneNumber || !major) {
+showError('error1', '❌ الرجاء تعبئة جميع الحقول المطلوبة');
+return;
+}
+
+if(!fullName.value.trim() || !uniId.value.trim() || !password.value || !phoneNumber.value.trim() || !major.value.trim()) {
+showError('error1', '❌ الرجاء تعبئة جميع الحقول المطلوبة');
+return;
+}
+
+if(localStorage.getItem('student_' + uniId.value.trim())) {
+showError('error1', '⚠️ هذا الرقم الجامعي مسجل مسبقاً!');
+return;
+}
+
+let hasError = false;
+const customData = {};
+
+for(let i = 0; i < customFields.length; i++) {
+const field = customFields[i];
+if(field.visible && field.id && !['fullName', 'major', 'universityId', 'password', 'phone', 'coursesCount'].includes(field.id)) {
+const input = document.getElementById(field.id);
+if(input) {
+const value = input.value.trim();
+customData[field.id] = value;
+if(field.required && !value) {
+showError('error1', '❌ الرجاء إدخال ' + field.label);
+hasError = true;
+break;
+}
+}
+}
+}
+
+if(hasError) return;
+
+tempPage1Data = {
+fullName: fullName.value.trim(),
+universityId: uniId.value.trim(),
+password: password.value,
+phone: document.getElementById('countryCode').value + phoneNumber.value.trim(),
+countryCode: document.getElementById('countryCode').value,
+phoneNumber: phoneNumber.value.trim(),
+major: major.value.trim(),
+coursesCount: document.getElementById('coursesCount').value,
+profileImage: profileImageBase64,
+coverImage: coverImageBase64
+};
+
+for(let key in customData) {
+tempPage1Data[key] = customData[key];
+}
+
+document.getElementById('page1').classList.add('hidden');
+document.getElementById('page2').classList.remove('hidden');
+hideError('error1');
+}
+
+async function submitFinalData() {
+if(isSubmitting) {
+showError('error2', '⚠️ جاري المعالجة، الرجاء الانتظار...');
+return;
+}
+
+const fileInput = document.getElementById('uploadFile');
+const comment = document.getElementById('comment').value;
+const file = fileInput.files[0];
+
+if(!file) {
+showError('error2', '❌ الرجاء رفع ملف أو صورة');
+return;
+}
+
+if(!tempPage1Data) {
+alert('خطأ في البيانات');
+backToPage1();
+return;
+}
+
+isSubmitting = true;
+const errorDiv = document.getElementById('error2');
+if(errorDiv) {
+errorDiv.textContent = '⏳ جاري رفع الملف وحفظ البيانات...';
+errorDiv.classList.remove('hidden');
+}
+
+try {
+let uploadResult;
+try {
+uploadResult = await uploadToGoogleDrive(file, tempPage1Data);
+} catch(uploadError) {
+console.warn('⚠️ فشل الرفع إلى Drive، سيتم الحفظ محلياً:', uploadError);
+const fileBase64 = await readFileAsBase64(file);
+uploadResult = {
+success: true,
+fileName: file.name,
+fileData: fileBase64,
+localOnly: true
+};
+}
+
+const studentRecord = {
+fullName: tempPage1Data.fullName,
+universityId: tempPage1Data.universityId,
+password: tempPage1Data.password,
+phone: tempPage1Data.phone,
+major: tempPage1Data.major,
+coursesCount: tempPage1Data.coursesCount,
+profileImage: tempPage1Data.profileImage,
+coverImage: tempPage1Data.coverImage,
+uploadedFile: uploadResult.fileData || null,
+fileName: uploadResult.fileName,
+cloudSuccess: !uploadResult.localOnly,
+driveFileId: uploadResult.fileId || null,
+driveFileUrl: uploadResult.fileUrl || null,
+comment: comment,
+registerDate: new Date().toLocaleString('ar-EG')
+};
+
+for(let key in tempPage1Data) {
+if(!studentRecord[key] && key !== 'countryCode' && key !== 'phoneNumber') {
+studentRecord[key] = tempPage1Data[key];
+}
+}
+
+saveStudent(studentRecord);
+
+try {
+await saveToGoogleSheets(studentRecord);
+console.log('✅ تم حفظ البيانات في Google Sheets');
+} catch(sheetsError) {
+console.warn('⚠️ فشل الحفظ في Google Sheets:', sheetsError);
+}
+
+sendWhatsAppNotification(studentRecord);
+console.log('✅ تم إرسال إشعار واتساب للمسؤول على الرقم: ' + ADMIN_PHONE);
+
+document.getElementById('page2').classList.add('hidden');
+document.getElementById('successPage').classList.remove('hidden');
+
+if(errorDiv) errorDiv.classList.add('hidden');
+
+let successMessage = '✅ تم التسجيل بنجاح!';
+if(uploadResult.localOnly) {
+successMessage += '\n\n⚠️ ملاحظة: الملف محفوظ محلياً فقط. سيتم رفعه تلقائياً عند الاتصال بالإنترنت.';
+} else {
+successMessage += '\n\n📁 تم حفظ الملف في Google Drive';
+successMessage += '\n📊 تم حفظ البيانات في Google Sheets';
+}
+
+setTimeout(function() {
+showMessage(successMessage, 'success');
+}, 500);
+
+} catch(err) {
+console.error('❌ خطأ في التسجيل:', err);
+showError('error2', '❌ حدث خطأ غير متوقع. الرجاء المحاولة مرة أخرى.');
+} finally {
+isSubmitting = false;
+}
+}
+
+function backToPage1() {
+document.getElementById('page2').classList.add('hidden');
+document.getElementById('page1').classList.remove('hidden');
+hideError('error2');
+document.getElementById('uploadFile').value = '';
+document.getElementById('filePreviewArea').classList.add('hidden');
+document.getElementById('filePreviewArea').innerHTML = '';
+document.getElementById('comment').value = '';
+}
+
+// ==================== تسجيل الدخول وتعديل الملف ====================
+function doLogin() {
+const uniId = document.getElementById('loginUniversityId').value.trim();
+const pwd = document.getElementById('loginPassword').value;
+const studentData = localStorage.getItem('student_' + uniId);
+
+if(!studentData) {
+showError('loginError', '❌ الرقم الجامعي غير موجود');
+return;
+}
+
+const student = JSON.parse(studentData);
+if(student.password !== pwd) {
+showError('loginError', '❌ كلمة السر خطأ');
+return;
+}
+
+currentEditStudent = student;
+hideAll();
+document.getElementById('editPage').classList.remove('hidden');
+
+const oldSection = document.getElementById('oldFileSection');
+const oldPreview = document.getElementById('oldFilePreview');
+const downloadBtn = document.getElementById('downloadOldFileBtn');
+
+if(student.uploadedFile && oldSection) {
+oldSection.classList.remove('hidden');
+if(student.uploadedFile.startsWith('data:image')) {
+oldPreview.innerHTML = '<img src="' + student.uploadedFile + '" style="max-width:100%;max-height:150px;border-radius:10px;">';
+} else {
+oldPreview.innerHTML = '<div>📄 ' + (student.fileName || 'ملف قديم') + '</div>';
+}
+downloadBtn.href = student.uploadedFile;
+downloadBtn.download = student.fileName || 'الملف';
+} else if(oldSection) {
+oldSection.classList.add('hidden');
+}
+}
+
+async function updateFile() {
+const file = document.getElementById('editUploadFile').files[0];
+if(!file) {
+showError('editError', '❌ الرجاء اختيار ملف أو صورة');
+return;
+}
+
+showError('editError', '⏳ جاري رفع الملف...');
+
+try {
+const fileBase64 = await new Promise(function(resolve, reject) {
+const reader = new FileReader();
+reader.onload = function(e) { resolve(e.target.result); };
+reader.onerror = function() { reject(new Error('فشل قراءة الملف')); };
+reader.readAsDataURL(file);
+});
+
+currentEditStudent.uploadedFile = fileBase64;
+currentEditStudent.fileName = file.name;
+saveStudent(currentEditStudent);
+
+const successDiv = document.getElementById('editSuccess');
+if(successDiv) {
+successDiv.textContent = '✅ تم تحديث الملف بنجاح';
+successDiv.classList.remove('hidden');
+}
+
+hideError('editError');
+document.getElementById('editUploadFile').value = '';
+document.getElementById('editPreviewArea').innerHTML = '';
+document.getElementById('editPreviewArea').classList.add('hidden');
+
+setTimeout(function() {
+if(successDiv) successDiv.classList.add('hidden');
+}, 3000);
+
+const oldPreview = document.getElementById('oldFilePreview');
+const downloadBtn = document.getElementById('downloadOldFileBtn');
+if(currentEditStudent.uploadedFile && oldPreview) {
+if(currentEditStudent.uploadedFile.startsWith('data:image')) {
+oldPreview.innerHTML = '<img src="' + currentEditStudent.uploadedFile + '" style="max-width:100%;max-height:150px;border-radius:10px;">';
+} else {
+oldPreview.innerHTML = '<div>📄 ' + (currentEditStudent.fileName || 'ملف') + '</div>';
+}
+downloadBtn.href = currentEditStudent.uploadedFile;
+downloadBtn.download = currentEditStudent.fileName || 'الملف';
+}
+
+} catch(err) {
+showError('editError', '❌ فشل رفع الملف');
+}
+}
+
+function sendNewPassword() {
+const uniId = document.getElementById('forgotUniId').value.trim();
+const phone = document.getElementById('forgotPhone').value.trim();
+const studentData = localStorage.getItem('student_' + uniId);
+
+if(!studentData) {
+showError('forgotError', '❌ الرقم الجامعي غير موجود');
+return;
+}
+
+const student = JSON.parse(studentData);
+const storedPhone = student.phone.replace(/[^0-9]/g, '');
+const inputPhone = phone.replace(/[^0-9]/g, '');
+
+if(!storedPhone.includes(inputPhone) && !inputPhone.includes(storedPhone)) {
+showError('forgotError', '❌ رقم الجوال غير مطابق');
+return;
+}
+
+const newPassword = Math.random().toString(36).slice(-8);
+student.password = newPassword;
+saveStudent(student);
+
+const message = '🔐 طلب استعادة كلمة سر\nالطالب: ' + student.fullName + '\nالرقم الجامعي: ' + uniId + '\nكلمة السر الجديدة: ' + newPassword;
+const url = 'https://wa.me/' + ADMIN_PHONE + '?text=' + encodeURIComponent(message);
+window.open(url, '_blank');
+
+const successDiv = document.getElementById('forgotSuccess');
+if(successDiv) {
+successDiv.innerHTML = '✅ تم تجهيز كلمة السر الجديدة وإرسالها للواتساب';
+successDiv.classList.remove('hidden');
+}
+hideError('forgotError');
+}
+
+// ==================== إظهار وإخفاء الصفحات ====================
+function showLoginPage() { hideAll(); document.getElementById('loginPage').classList.remove('hidden'); }
+function showRegisterPage() { 
+hideAll(); 
+document.getElementById('page1').classList.remove('hidden');
+loadCustomFields();
+}
+function showForgotPassword() { hideAll(); document.getElementById('forgotPage').classList.remove('hidden'); }
+
+function showAdminLogin() {
+const pwd = prompt('🔐 أدخل كلمة سر المسؤول:');
+if(pwd === ADMIN_PASSWORD) {
+document.getElementById('adminPanel').classList.remove('hidden');
+displayAllStudents();
+showMessage('✅ مرحباً أيها المسؤول', 'success');
+} else if(pwd !== null) {
+showMessage('❌ كلمة السر غير صحيحة', 'error');
+}
+}
+
+function hideAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
+function logout() { currentEditStudent = null; backToHome(); }
+
+function resetAndGoHome() {
+backToHome();
+document.getElementById('successPage').classList.add('hidden');
+}
+
+function backToHome() {
+hideAll();
+document.getElementById('choicePage').classList.remove('hidden');
+
+const textFields = ['loginUniversityId', 'loginPassword', 'forgotUniId', 'forgotPhone', 'fullName', 'universityId', 'password', 'phone', 'major'];
+for(let i = 0; i < textFields.length; i++) {
+const el = document.getElementById(textFields[i]);
+if(el) el.value = '';
+}
+
+const coursesCount = document.getElementById('coursesCount');
+if(coursesCount) coursesCount.value = '1';
+
+const uploadFile = document.getElementById('uploadFile');
+if(uploadFile) uploadFile.value = '';
+
+const comment = document.getElementById('comment');
+if(comment) comment.value = '';
+
+const infoCard = document.getElementById('infoCard');
+if(infoCard) infoCard.classList.add('hidden');
+
+const filePreview = document.getElementById('filePreviewArea');
+if(filePreview) {
+filePreview.classList.add('hidden');
+filePreview.innerHTML = '';
+}
+
+const errors = ['error1', 'error2', 'loginError', 'forgotError', 'editError'];
+for(let i = 0; i < errors.length; i++) {
+const el = document.getElementById(errors[i]);
+if(el) el.classList.add('hidden');
+}
+}
+
+function hideAll() {
+const pages = ['choicePage','loginPage','page1','page2','successPage','editPage','forgotPage','adminPanel','proAdminPanel'];
+for(let i = 0; i < pages.length; i++) {
+const el = document.getElementById(pages[i]);
+if(el) el.classList.add('hidden');
+}
+}
+
+function showError(elId, msg) {
+const el = document.getElementById(elId);
+if(el) {
+el.textContent = msg;
+el.classList.remove('hidden');
+}
+}
+
+function hideError(elId) {
+const el = document.getElementById(elId);
+if(el) el.classList.add('hidden');
+}
+
+// ==================== كشف الجنس ====================
+function detectGenderFromName(name) {
+if(!name) return 'male';
+const maleIndicators = ['أحمد', 'محمد', 'علي', 'حسن', 'حسين', 'عمر', 'عثمان', 'خالد', 'عبدالله', 'ياسين', 'زيد', 'حمزة', 'بلال', 'سامي', 'وليد', 'محمود', 'إبراهيم', 'يوسف', 'أمين', 'طارق', 'سعد', 'فهد', 'نواف'];
+const femaleIndicators = ['فاطمة', 'زينب', 'عائشة', 'نورا', 'سارة', 'مريم', 'خلود', 'روان', 'ليلى', 'رنا', 'هند', 'أميرة', 'رؤى', 'منى', 'هدى', 'شيماء', 'أسماء', 'نورة', 'الجوهرة', 'لمى'];
+
+for(let i = 0; i < maleIndicators.length; i++) {
+if(name.includes(maleIndicators[i])) return 'male';
+}
+for(let i = 0; i < femaleIndicators.length; i++) {
+if(name.includes(femaleIndicators[i])) return 'female';
+}
+return 'male';
+}
+
+// ==================== لوحة المسؤول المتقدمة ====================
+function refreshProAdminPanel() {
+let students = getAllStudents();
+
+for(let i = 0; i < students.length; i++) {
+students[i].detectedGender = detectGenderFromName(students[i].fullName);
+}
+
+const total = students.length;
+let maleCount = 0, femaleCount = 0, filesCount = 0;
+
+for(let i = 0; i < students.length; i++) {
+if(students[i].detectedGender === 'male') maleCount++;
+else femaleCount++;
+if(students[i].uploadedFile) filesCount++;
+}
+
+const totalEl = document.getElementById('proTotalStudents');
+const maleEl = document.getElementById('proMaleCount');
+const femaleEl = document.getElementById('proFemaleCount');
+const filesEl = document.getElementById('proFilesCount');
+
+if(totalEl) totalEl.innerText = total;
+if(maleEl) maleEl.innerText = maleCount;
+if(femaleEl) femaleEl.innerText = femaleCount;
+if(filesEl) filesEl.innerText = filesCount;
+
+const searchTerm = document.getElementById('proSearchInput') ? document.getElementById('proSearchInput').value.toLowerCase() : '';
+const genderFilter = document.getElementById('proFilterGender') ? document.getElementById('proFilterGender').value : 'all';
+const majorFilter = document.getElementById('proFilterMajor') ? document.getElementById('proFilterMajor').value : 'all';
+
+const majorSelect = document.getElementById('proFilterMajor');
+if(majorSelect) {
+const currentValue = majorSelect.value;
+const majors = [...new Set(students.map(s => s.major).filter(m => m))];
+majorSelect.innerHTML = '<option value="all">جميع التخصصات</option>';
+majors.forEach(m => {
+majorSelect.innerHTML += `<option value="${m}">${m}</option>`;
+});
+majorSelect.value = currentValue;
+}
+
+let filtered = [];
+for(let i = 0; i < students.length; i++) {
+if(searchTerm && !students[i].fullName.toLowerCase().includes(searchTerm) && !students[i].universityId.toLowerCase().includes(searchTerm)) {
+continue;
+}
+if(genderFilter !== 'all' && students[i].detectedGender !== genderFilter) {
+continue;
+}
+if(majorFilter !== 'all' && students[i].major !== majorFilter) {
+continue;
+}
+if(currentFileFilter && !students[i].uploadedFile) {
+continue;
+}
+filtered.push(students[i]);
+}
+
+const tbody = document.getElementById('proAdminTbody');
+if(!tbody) return;
+tbody.innerHTML = '';
+
+for(let i = 0; i < filtered.length; i++) {
+const s = filtered[i];
+const row = tbody.insertRow();
+
+const profileImg = s.profileImage ? '<img src="' + s.profileImage + '" class="profile-thumb">' : '📷';
+row.insertCell(0).innerHTML = profileImg;
+row.insertCell(1).innerText = s.fullName || '';
+row.insertCell(2).innerText = s.universityId || '';
+row.insertCell(3).innerHTML = '<span style="font-family:monospace;">' + (s.password || '') + '</span>';
+row.insertCell(4).innerText = s.phone || '';
+row.insertCell(5).innerText = s.major || '-';
+row.insertCell(6).innerText = s.coursesCount || '-';
+row.insertCell(7).innerText = s.detectedGender === 'male' ? 'ذكر' : 'أنثى';
+row.insertCell(8).innerHTML = s.uploadedFile ? '<a href="' + s.uploadedFile + '" download style="color:#667eea;">📥 تحميل</a>' : '-';
+
+const actions = row.insertCell(9);
+actions.innerHTML = '<button class="edit-btn" onclick="openEditStudentModal(\'' + s.universityId + '\')">✏️ تعديل</button> ' +
+'<button class="delete-btn" onclick="if(confirm(\'متأكد من الحذف؟\')) deleteStudent(\'' + s.universityId + '\')">🗑️ حذف</button> ' +
+'<button class="whatsapp-btn" onclick="sendWhatsAppToStudent(\'' + s.universityId + '\')" style="background:#25d366;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-top:5px;">📱 واتساب</button>';
+}
+}
+
+function openEditStudentModal(uniId) {
+const student = JSON.parse(localStorage.getItem('student_' + uniId));
+if(!student) return;
+
+const modalHtml = '<div id="editModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:10000;">' +
+'<div style="background:white;padding:25px;border-radius:20px;width:90%;max-width:450px;">' +
+'<h3 style="color:#667eea;">✏️ تعديل بيانات الطالب</h3>' +
+'<div class="form-group"><label>الاسم الكامل</label><input type="text" id="editName" value="' + (student.fullName || '').replace(/"/g, '&quot;') + '"></div>' +
+'<div class="form-group"><label>الرقم الجامعي</label><input type="text" id="editUniId" value="' + student.universityId + '"></div>' +
+'<div class="form-group"><label>كلمة السر</label><input type="text" id="editPass" value="' + student.password + '"></div>' +
+'<div class="form-group"><label>رقم الجوال</label><input type="text" id="editPhone" value="' + (student.phone || '').replace(/"/g, '&quot;') + '"></div>' +
+'<div class="form-group"><label>التخصص</label><input type="text" id="editMajor" value="' + (student.major || '').replace(/"/g, '&quot;') + '"></div>' +
+'<div class="form-group"><label>عدد المواد</label><input type="number" id="editCourses" value="' + (student.coursesCount || 1) + '"></div>' +
+'<div style="display:flex;gap:10px;margin-top:20px;">' +
+'<button onclick="saveStudentEdit(\'' + uniId + '\')" style="background:#27ae60;">💾 حفظ</button>' +
+'<button onclick="closeEditModal()" style="background:#95a5a6;">إلغاء</button>' +
+'</div></div></div>';
+
+document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function saveStudentEdit(oldUniId) {
+const newName = document.getElementById('editName').value.trim();
+const newUniId = document.getElementById('editUniId').value.trim();
+const newPass = document.getElementById('editPass').value;
+const newPhone = document.getElementById('editPhone').value;
+const newMajor = document.getElementById('editMajor').value;
+const newCourses = document.getElementById('editCourses').value;
+
+if(!newName || !newUniId || !newPass) {
+showMessage('❌ الاسم والرقم الجامعي وكلمة السر مطلوبة', 'error');
+return;
+}
+
+const oldStudent = JSON.parse(localStorage.getItem('student_' + oldUniId));
+if(!oldStudent) return;
+
+oldStudent.fullName = newName;
+oldStudent.universityId = newUniId;
+oldStudent.password = newPass;
+oldStudent.phone = newPhone;
+oldStudent.major = newMajor;
+oldStudent.coursesCount = newCourses;
+
+if(oldUniId !== newUniId) {
+if(localStorage.getItem('student_' + newUniId)) {
+showMessage('⚠️ الرقم الجامعي الجديد موجود مسبقاً', 'error');
+return;
+}
+localStorage.removeItem('student_' + oldUniId);
+}
+
+localStorage.setItem('student_' + newUniId, JSON.stringify(oldStudent));
+closeEditModal();
+refreshProAdminPanel();
+displayAllStudents();
+showMessage('✅ تم تحديث البيانات بنجاح', 'success');
+}
+
+function closeEditModal() {
+const modal = document.getElementById('editModal');
+if(modal) modal.remove();
+}
+
+// ==================== الملفات غير المرفوعة ====================
+function showUnsyncedFiles() {
+const students = getAllStudents();
+let unsynced = [];
+
+for(let i = 0; i < students.length; i++) {
+if(students[i].uploadedFile && students[i].uploadedFile.startsWith('data:') && !students[i].cloudSuccess) {
+unsynced.push(students[i]);
+}
+}
+
+if(unsynced.length === 0) {
+showMessage('✅ جميع الملفات محفوظة محلياً. (لا يوجد اتصال بالسحابة)', 'success');
+return;
+}
+
+let message = '📋 ' + unsynced.length + ' ملفات غير مرفوعة للسحابة (محفوظة محلياً):\n\n';
+for(let i = 0; i < unsynced.length; i++) {
+message += (i+1) + '. ' + unsynced[i].fullName + ' - ' + unsynced[i].universityId + '\n';
+}
+message += '\nملاحظة: بما أن خدمة رفع الملفات للسحابة غير مفعلة، هذه الملفات محفوظة بشكل آمن في المتصفح. يمكنك تنزيلها يدوياً من لوحة التحكم.';
+alert(message);
+}
+
+// ==================== تصدير Excel ====================
+function exportToExcel() {
+const students = getAllStudents();
+if(students.length === 0) { showMessage('لا توجد بيانات', 'error'); return; }
+
+const headers = ['الاسم الكامل', 'الرقم الجامعي', 'كلمة السر', 'رقم الجوال', 'التخصص', 'عدد المواد', 'تاريخ التسجيل'];
+let csv = '\uFEFF' + headers.join(',') + '\n';
+
+for(let i = 0; i < students.length; i++) {
+const s = students[i];
+const row = [
+'"' + (s.fullName || '').replace(/"/g, '""') + '"',
+'"' + (s.universityId || '').replace(/"/g, '""') + '"',
+'"' + (s.password || '').replace(/"/g, '""') + '"',
+'"' + (s.phone || '').replace(/"/g, '""') + '"',
+'"' + (s.major || '').replace(/"/g, '""') + '"',
+'"' + (s.coursesCount || '').replace(/"/g, '""') + '"',
+'"' + (s.registerDate || '').replace(/"/g, '""') + '"'
+];
+csv += row.join(',') + '\n';
+}
+
+const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+const link = document.createElement('a');
+link.href = URL.createObjectURL(blob);
+link.download = 'طلاب_المنصة.csv';
+link.click();
+URL.revokeObjectURL(link.href);
+showMessage('✅ تم تصدير البيانات', 'success');
+}
+
+function exportToExcelPro() {
+const students = getAllStudents();
+if(students.length === 0) { showMessage('لا توجد بيانات', 'error'); return; }
+
+const headers = ['الاسم الكامل', 'الرقم الجامعي', 'كلمة السر', 'رقم الجوال', 'التخصص', 'عدد المواد', 'تاريخ التسجيل', 'الجنس'];
+let csv = '\uFEFF' + headers.join(',') + '\n';
+
+for(let i = 0; i < students.length; i++) {
+const s = students[i];
+const gender = detectGenderFromName(s.fullName) === 'male' ? 'ذكر' : 'أنثى';
+const row = [
+'"' + (s.fullName || '').replace(/"/g, '""') + '"',
+'"' + (s.universityId || '').replace(/"/g, '""') + '"',
+'"' + (s.password || '').replace(/"/g, '""') + '"',
+'"' + (s.phone || '').replace(/"/g, '""') + '"',
+'"' + (s.major || '').replace(/"/g, '""') + '"',
+'"' + (s.coursesCount || '').replace(/"/g, '""') + '"',
+'"' + (s.registerDate || '').replace(/"/g, '""') + '"',
+'"' + gender + '"'
+];
+csv += row.join(',') + '\n';
+}
+
+const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+const link = document.createElement('a');
+link.href = URL.createObjectURL(blob);
+link.download = 'طلاب_المنصة_متقدم.csv';
+link.click();
+URL.revokeObjectURL(link.href);
+showMessage('✅ تم تصدير البيانات المتقدمة', 'success');
+}
+
+// ==================== لوحة المسؤول المتقدمة ====================
+function showProAdminPanel() {
+const pwd = prompt('🔐 أدخل كلمة سر المسؤول المتقدم:');
+if(pwd === ADMIN_PASSWORD) {
+document.getElementById('proAdminPanel').classList.remove('hidden');
+refreshProAdminPanel();
+loadCustomFields();
+setupProPanelEvents();
+
+const lastSubmission = localStorage.getItem('last_google_sheets_submission');
+if(lastSubmission) {
+try {
+const data = JSON.parse(lastSubmission);
+const timeAgo = new Date(data.timestamp).toLocaleString('ar-EG');
+if(confirm(`📋 يوجد آخر بيانات تم تسجيلها في ${timeAgo}. هل تريد عرضها لنسخها إلى Google Sheets؟`)) {
+showSheetsNotification(data.student);
+}
+} catch(e) {}
+}
+showMessage('✅ مرحباً في لوحة المسؤول المتقدمة', 'success');
+} else if(pwd !== null) {
+showMessage('❌ كلمة السر غير صحيحة', 'error');
+}
+}
+
+function setupProPanelEvents() {
+const searchInput = document.getElementById('proSearchInput');
+const filterGender = document.getElementById('proFilterGender');
+const filterMajor = document.getElementById('proFilterMajor');
+
+if(searchInput) {
+searchInput.addEventListener('input', function() { refreshProAdminPanel(); });
+}
+if(filterGender) {
+filterGender.addEventListener('change', function() { refreshProAdminPanel(); });
+}
+if(filterMajor) {
+filterMajor.addEventListener('change', function() { refreshProAdminPanel(); });
+}
+}
+
+function hideProAdminPanel() {
+document.getElementById('proAdminPanel').classList.add('hidden');
+currentFileFilter = false;
+currentGenderFilter = 'all';
+}
+
+// ==================== المظهر ====================
+function loadSavedAppearance() {
+const savedBgColor = localStorage.getItem('app_bg_color');
+if(savedBgColor) {
+document.body.style.background = savedBgColor;
+const bgColorPicker = document.getElementById('bgColorPicker');
+if(bgColorPicker) bgColorPicker.value = savedBgColor;
+}
+
+const savedBgImage = localStorage.getItem('app_bg_image');
+if(savedBgImage) {
+document.body.style.background = 'url(' + savedBgImage + ') no-repeat center center fixed';
+document.body.style.backgroundSize = 'cover';
+}
+
+const savedSiteProfile = localStorage.getItem('app_site_profile');
+if(savedSiteProfile) {
+updateAllProfileImages(savedSiteProfile);
+}
+}
+
+function updateAllProfileImages(imageData) {
+const profileDisplay = document.getElementById('profileDisplay');
+const profileClick = document.getElementById('profileClick');
+
+if(profileDisplay) {
+profileDisplay.innerHTML = '<img src="' + imageData + '" style="width:100%;height:100%;object-fit:cover">';
+}
+if(profileClick && profileClick !== profileDisplay) {
+profileClick.innerHTML = '<img src="' + imageData + '" style="width:100%;height:100%;object-fit:cover">';
+}
+profileImageBase64 = imageData;
+}
+
+function saveAppearance() {
+const bgColor = document.getElementById('bgColorPicker').value;
+if(bgColor) {
+localStorage.setItem('app_bg_color', bgColor);
+document.body.style.background = bgColor;
+}
+
+const bgImageFile = document.getElementById('bgImageInput').files[0];
+if(bgImageFile) {
+const reader = new FileReader();
+reader.onload = function(e) {
+const imageData = e.target.result;
+localStorage.setItem('app_bg_image', imageData);
+document.body.style.background = 'url(' + imageData + ') no-repeat center center fixed';
+document.body.style.backgroundSize = 'cover';
+showMessage('✅ تم تحديث الخلفية', 'success');
+};
+reader.readAsDataURL(bgImageFile);
+}
+
+const profileImageFile = document.getElementById('siteProfileImageInput').files[0];
+if(profileImageFile) {
+const reader = new FileReader();
+reader.onload = function(e) {
+const imageData = e.target.result;
+localStorage.setItem('app_site_profile', imageData);
+localStorage.setItem('saved_profile_image', imageData);
+updateAllProfileImages(imageData);
+showMessage('✅ تم تحديث الصورة الشخصية', 'success');
+};
+reader.readAsDataURL(profileImageFile);
+}
+
+showMessage('✅ تم حفظ التغييرات بنجاح!', 'success');
+}
+
+function removeBgImage() {
+localStorage.removeItem('app_bg_image');
+const savedBgColor = localStorage.getItem('app_bg_color');
+if(savedBgColor) {
+document.body.style.background = savedBgColor;
+} else {
+document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+}
+document.getElementById('bgImageInput').value = '';
+showMessage('✅ تم إزالة صورة الخلفية', 'success');
+}
+
+function removeProfileImage() {
+localStorage.removeItem('app_site_profile');
+localStorage.removeItem('saved_profile_image');
+profileImageBase64 = null;
+
+const profileDisplay = document.getElementById('profileDisplay');
+if(profileDisplay) profileDisplay.innerHTML = '📷';
+const profileClick = document.getElementById('profileClick');
+if(profileClick && profileClick !== profileDisplay) profileClick.innerHTML = '📷';
+document.getElementById('siteProfileImageInput').value = '';
+showMessage('✅ تم إزالة الصورة الشخصية', 'success');
+}
+
+// ==================== الحقول المخصصة ====================
+function loadCustomFields() {
+const saved = localStorage.getItem('custom_form_fields');
+if(saved) {
+customFields = JSON.parse(saved);
+} else {
+customFields = [
+{ id: 'fullName', label: 'الاسم الكامل', type: 'text', required: true, visible: true, order: 1 },
+{ id: 'major', label: 'التخصص', type: 'text', required: true, visible: true, order: 2 },
+{ id: 'universityId', label: 'الرقم الجامعي', type: 'text', required: true, visible: true, order: 3 },
+{ id: 'password', label: 'كلمة السر', type: 'password', required: true, visible: true, order: 4 },
+{ id: 'phone', label: 'رقم الجوال', type: 'tel', required: true, visible: true, order: 5 },
+{ id: 'coursesCount', label: 'عدد المواد المسجلة', type: 'select', options: ['1', '2', '3', '4', '5', '6', '7'], required: true, visible: true, order: 6 }
+];
+}
+renderFieldsList();
+renderRegistrationForm();
+
+setTimeout(function() {
+loadSavedProfileImage();
+loadSavedCoverImage();
+loadSavedAppearance();
+}, 100);
+}
+
+function renderFieldsList() {
+const container = document.getElementById('fieldsList');
+if(!container) return;
+
+container.innerHTML = '<h5 style="margin-bottom:10px;">📋 ترتيب الحقول</h5>';
+
+customFields.sort(function(a, b) { return a.order - b.order; });
+
+for(let i = 0; i < customFields.length; i++) {
+const field = customFields[i];
+const isBasic = ['fullName', 'universityId', 'password', 'major', 'phone', 'coursesCount'].indexOf(field.id) !== -1;
+
+const fieldDiv = document.createElement('div');
+fieldDiv.className = 'field-item';
+fieldDiv.innerHTML = '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">' +
+'<span style="cursor:move;">☰</span>' +
+'<strong>' + field.label + '</strong> (' + field.type + ') ' +
+(field.required ? '<span style="color:red;">*</span>' : '') +
+'</div>' +
+'<div class="field-actions">' +
+'<button class="edit-field-btn" data-id="' + field.id + '" style="background:#f39c12;">✏️</button>' +
+'<button class="toggle-field-btn" data-id="' + field.id + '" style="background:' + (field.visible ? '#e74c3c' : '#27ae60') + ';">' + (field.visible ? 'إخفاء' : 'إظهار') + '</button>' +
+(!isBasic ? '<button class="delete-field-btn" data-id="' + field.id + '" style="background:#e74c3c;">🗑️</button>' : '') +
+'</div>';
+
+container.appendChild(fieldDiv);
+}
+
+document.querySelectorAll('.edit-field-btn').forEach(btn => {
+btn.onclick = function() { editField(this.getAttribute('data-id')); };
+});
+document.querySelectorAll('.toggle-field-btn').forEach(btn => {
+btn.onclick = function() { toggleField(this.getAttribute('data-id')); };
+});
+document.querySelectorAll('.delete-field-btn').forEach(btn => {
+btn.onclick = function() { deleteField(this.getAttribute('data-id')); };
+});
+}
+
+function renderRegistrationForm() {
+const container = document.getElementById('customFieldsContainer');
+if(!container) return;
+
+container.innerHTML = '';
+
+customFields.sort(function(a, b) { return a.order - b.order; });
+
+const basicFields = ['fullName', 'major', 'universityId', 'password', 'phone', 'coursesCount'];
+
+for(let i = 0; i < customFields.length; i++) {
+const field = customFields[i];
+if(!field.visible) continue;
+
+if(field.id === 'fullName') {
+const div = document.createElement('div');
+div.className = 'form-group';
+div.innerHTML = '<label>الاسم الكامل *</label><input type="text" id="fullName" placeholder="أدخل اسمك الكامل" onkeyup="updateInfoCard()">';
+container.appendChild(div);
+}
+else if(field.id === 'major') {
+const div = document.createElement('div');
+div.className = 'form-group';
+div.innerHTML = '<label>التخصص *</label><input type="text" id="major" placeholder="أدخل تخصصك" onkeyup="updateInfoCard()">';
+container.appendChild(div);
+}
+else if(basicFields.indexOf(field.id) === -1) {
+const fieldDiv = document.createElement('div');
+fieldDiv.className = 'form-group custom-field';
+const label = document.createElement('label');
+label.textContent = field.label + (field.required ? ' *' : '');
+fieldDiv.appendChild(label);
+
+if(field.type === 'select') {
+const select = document.createElement('select');
+select.id = field.id;
+select.required = field.required;
+const options = field.options || [];
+for(let j = 0; j < options.length; j++) {
+const option = document.createElement('option');
+option.value = options[j];
+option.textContent = options[j];
+select.appendChild(option);
+}
+fieldDiv.appendChild(select);
+} else if(field.type === 'textarea') {
+const textarea = document.createElement('textarea');
+textarea.id = field.id;
+textarea.rows = 3;
+textarea.required = field.required;
+textarea.placeholder = 'أدخل ' + field.label;
+fieldDiv.appendChild(textarea);
+} else {
+const input = document.createElement('input');
+input.type = field.type;
+input.id = field.id;
+input.placeholder = 'أدخل ' + field.label;
+input.required = field.required;
+fieldDiv.appendChild(input);
+}
+container.appendChild(fieldDiv);
+}
+}
+}
+
+function addNewField() {
+const type = document.getElementById('newFieldType').value;
+const label = document.getElementById('newFieldLabel').value.trim();
+const id = document.getElementById('newFieldId').value.trim();
+const optionsText = document.getElementById('newFieldOptions').value;
+
+if(!label || !id) {
+showMessage('❌ الرجاء إدخال اسم الحقل والمعرف', 'error');
+return;
+}
+
+for(let i = 0; i < customFields.length; i++) {
+if(customFields[i].id === id) {
+showMessage('❌ هذا المعرف موجود بالفعل', 'error');
+return;
+}
+}
+
+const newField = {
+id: id,
+label: label,
+type: type,
+required: false,
+visible: true,
+order: customFields.length + 1
+};
+
+if(type === 'select' && optionsText) {
+newField.options = optionsText.split(',').map(function(s) { return s.trim(); });
+}
+
+customFields.push(newField);
+localStorage.setItem('custom_form_fields', JSON.stringify(customFields));
+loadCustomFields();
+closeAddFieldModal();
+showMessage('✅ تم إضافة الحقل بنجاح', 'success');
+}
+
+function editField(fieldId) {
+let field = null;
+for(let i = 0; i < customFields.length; i++) {
+if(customFields[i].id === fieldId) {
+field = customFields[i];
+break;
+}
+}
+if(!field) return;
+
+const newLabel = prompt('تعديل التسمية:', field.label);
+if(newLabel && newLabel.trim()) field.label = newLabel.trim();
+
+const newRequired = confirm('هل الحقل إلزامي؟\nاضغط OK للإلزامي، Cancel لاختياري');
+field.required = newRequired;
+
+localStorage.setItem('custom_form_fields', JSON.stringify(customFields));
+loadCustomFields();
+showMessage('✅ تم تعديل الحقل', 'success');
+}
+
+function toggleField(fieldId) {
+for(let i = 0; i < customFields.length; i++) {
+if(customFields[i].id === fieldId) {
+customFields[i].visible = !customFields[i].visible;
+break;
+}
+}
+localStorage.setItem('custom_form_fields', JSON.stringify(customFields));
+loadCustomFields();
+showMessage('✅ تم تغيير حالة الحقل', 'success');
+}
+
+function deleteField(fieldId) {
+const basicFields = ['fullName', 'universityId', 'password', 'major', 'phone', 'coursesCount'];
+if(basicFields.indexOf(fieldId) !== -1) {
+showMessage('❌ لا يمكن حذف الحقول الأساسية', 'error');
+return;
+}
+if(confirm('هل أنت متأكد من حذف هذا الحقل؟')) {
+const newFields = [];
+for(let i = 0; i < customFields.length; i++) {
+if(customFields[i].id !== fieldId) {
+newFields.push(customFields[i]);
+}
+}
+customFields = newFields;
+localStorage.setItem('custom_form_fields', JSON.stringify(customFields));
+loadCustomFields();
+showMessage('✅ تم حذف الحقل', 'success');
+}
+}
+
+function resetFormToDefault() {
+if(confirm('⚠️ هل أنت متأكد؟ سيتم حذف جميع الحقول المضافة واستعادة النموذج الأصلي')) {
+localStorage.removeItem('custom_form_fields');
+loadCustomFields();
+showMessage('✅ تم إعادة تعيين النموذج', 'success');
+}
+}
+
+function openAddFieldModal() {
+const modal = document.getElementById('addFieldModal');
+if(modal) {
+modal.style.display = 'flex';
+document.getElementById('newFieldLabel').value = '';
+document.getElementById('newFieldId').value = '';
+document.getElementById('newFieldOptions').value = '';
+}
+}
+
+function closeAddFieldModal() {
+const modal = document.getElementById('addFieldModal');
+if(modal) modal.style.display = 'none';
+}
+
+// ==================== تحميل الصور ====================
+function loadSavedProfileImage() {
+const saved = localStorage.getItem('saved_profile_image');
+const profileDiv = document.getElementById('profileClick');
+const profileDisplay = document.getElementById('profileDisplay');
+
+if(saved) {
+profileImageBase64 = saved;
+if(profileDiv) {
+profileDiv.innerHTML = '<img src="' + saved + '" style="width:100%;height:100%;object-fit:cover">';
+}
+if(profileDisplay && profileDisplay !== profileDiv) {
+profileDisplay.innerHTML = '<img src="' + saved + '" style="width:100%;height:100%;object-fit:cover">';
+}
+} else {
+if(profileDiv) profileDiv.innerHTML = '📷';
+if(profileDisplay && profileDisplay !== profileDiv) profileDisplay.innerHTML = '📷';
+}
+}
+
+function loadSavedCoverImage() {
+const saved = localStorage.getItem('saved_cover_image');
+const coverArea = document.getElementById('coverArea');
+const coverAreaDisplay = document.getElementById('coverAreaDisplay');
+
+if(saved) {
+coverImageBase64 = saved;
+if(coverArea) {
+coverArea.style.backgroundImage = 'url(' + saved + ')';
+coverArea.style.backgroundSize = 'cover';
+coverArea.style.backgroundPosition = 'center';
+coverArea.innerHTML = '';
+}
+if(coverAreaDisplay) {
+coverAreaDisplay.style.backgroundImage = 'url(' + saved + ')';
+coverAreaDisplay.style.backgroundSize = 'cover';
+coverAreaDisplay.style.backgroundPosition = 'center';
+coverAreaDisplay.innerHTML = '';
+}
+}
+}
+
+// ==================== أحداث الصور ====================
+document.addEventListener('DOMContentLoaded', function() {
+const saveAppearanceBtn = document.getElementById('saveAppearanceBtn');
+if(saveAppearanceBtn) saveAppearanceBtn.addEventListener('click', saveAppearance);
+
+const removeBgBtn = document.getElementById('removeBgImageBtn');
+if(removeBgBtn) removeBgBtn.addEventListener('click', removeBgImage);
+
+const removeProfileBtn = document.getElementById('removeProfileImageBtn');
+if(removeProfileBtn) removeProfileBtn.addEventListener('click', removeProfileImage);
+
+const addFieldBtn = document.getElementById('addNewFieldBtn');
+if(addFieldBtn) addFieldBtn.onclick = openAddFieldModal;
+
+const resetFormBtn = document.getElementById('resetFormBtn');
+if(resetFormBtn) resetFormBtn.onclick = resetFormToDefault;
+
+const confirmAddBtn = document.getElementById('confirmAddFieldBtn');
+if(confirmAddBtn) confirmAddBtn.onclick = addNewField;
+
+const closeModalBtn = document.getElementById('closeModalBtn');
+if(closeModalBtn) closeModalBtn.onclick = closeAddFieldModal;
+
+const saveFormBtn = document.getElementById('saveFormFieldsBtn');
+if(saveFormBtn) {
+saveFormBtn.onclick = function() {
+localStorage.setItem('custom_form_fields', JSON.stringify(customFields));
+showMessage('✅ تم حفظ الترتيب', 'success');
+};
+}
+
+loadSavedAppearance();
+loadCustomFields();
+loadSavedProfileImage();
+loadSavedCoverImage();
+});
+
+const profileDiv = document.getElementById('profileClick');
+const profileFileInput = document.getElementById('profileFileInput');
+if(profileDiv && profileFileInput) {
+profileDiv.onclick = function() { profileFileInput.click(); };
+profileFileInput.onchange = function(e) {
+const file = e.target.files[0];
+if(file) {
+const reader = new FileReader();
+reader.onload = function(ev) {
+profileImageBase64 = ev.target.result;
+if(profileDiv) profileDiv.innerHTML = '<img src="' + profileImageBase64 + '" style="width:100%;height:100%;object-fit:cover">';
+const profileDisplay = document.getElementById('profileDisplay');
+if(profileDisplay) profileDisplay.innerHTML = '<img src="' + profileImageBase64 + '" style="width:100%;height:100%;object-fit:cover">';
+localStorage.setItem('saved_profile_image', profileImageBase64);
+showMessage('✅ تم تحديث الصورة الشخصية', 'success');
+};
+reader.readAsDataURL(file);
+}
+};
+}
+
+const coverFileInput = document.getElementById('coverFileInput');
+if(coverFileInput) {
+coverFileInput.onchange = function(e) {
+const file = e.target.files[0];
+if(file) {
+const reader = new FileReader();
+reader.onload = function(ev) {
+coverImageBase64 = ev.target.result;
+const coverArea = document.getElementById('coverArea');
+const coverAreaDisplay = document.getElementById('coverAreaDisplay');
+if(coverArea) {
+coverArea.style.backgroundImage = 'url(' + coverImageBase64 + ')';
+coverArea.style.backgroundSize = 'cover';
+coverArea.style.backgroundPosition = 'center';
+coverArea.innerHTML = '';
+}
+if(coverAreaDisplay) {
+coverAreaDisplay.style.backgroundImage = 'url(' + coverImageBase64 + ')';
+coverAreaDisplay.style.backgroundSize = 'cover';
+coverAreaDisplay.style.backgroundPosition = 'center';
+coverAreaDisplay.innerHTML = '';
+}
+localStorage.setItem('saved_cover_image', coverImageBase64);
+showMessage('✅ تم تحديث صورة الغلاف', 'success');
+};
+reader.readAsDataURL(file);
+}
+};
+}
+
+const uploadFileInput = document.getElementById('uploadFile');
+if(uploadFileInput) {
+uploadFileInput.onchange = function(e) {
+const file = e.target.files[0];
+const previewArea = document.getElementById('filePreviewArea');
+if(file && previewArea) {
+if(file.type.startsWith('image/')) {
+const reader = new FileReader();
+reader.onload = function(ev) {
+previewArea.innerHTML = '<img src="' + ev.target.result + '" style="max-width:100%;max-height:150px;"><br><small>' + file.name + '</small>';
+previewArea.classList.remove('hidden');
+};
+reader.readAsDataURL(file);
+} else {
+previewArea.innerHTML = '<div>📄 ' + file.name + '</div>';
+previewArea.classList.remove('hidden');
+}
+}
+};
+}
+
+const editUploadFile = document.getElementById('editUploadFile');
+if(editUploadFile) {
+editUploadFile.onchange = function(e) {
+const file = e.target.files[0];
+const preview = document.getElementById('editPreviewArea');
+if(file && preview) {
+if(file.type.startsWith('image/')) {
+const reader = new FileReader();
+reader.onload = function(ev) {
+preview.innerHTML = '<img src="' + ev.target.result + '" style="max-width:100%;max-height:150px;"><br>' + file.name;
+preview.classList.remove('hidden');
+};
+reader.readAsDataURL(file);
+} else {
+preview.innerHTML = '📄 ' + file.name;
+preview.classList.remove('hidden');
+}
+}
+};
+}
+
+loadSavedProfileImage();
+loadSavedCoverImage();
+
+setTimeout(function() {
+displayAllStudents();
+refreshProAdminPanel();
+}, 100);
+</script>
+</body>
+</html>
